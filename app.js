@@ -36,8 +36,20 @@ app.get("/compose", function(req, res){
 });
 
 app.get("/posts/:postName", function(req, res){
-  if(posts.some(post => _.lowerCase(post.title) === _.lowerCase(req.params.postName))){
+  // posts.forEach(function(post){
+  //   if(_.lowerCase(post.title) === _.lowerCase(req.params.postName)){
+  //     console.log("Match Found");
+  //     res.render("post", {postTitle: post.title, postContent: post.content});
+  //   }
+  // });
+
+  let postName = _.lowerCase(req.params.postName);
+  let foundPost = posts.find(post => _.lowerCase(post.title) === postName );
+  if(foundPost){
     console.log("Match Found");
+    console.log(foundPost);
+    console.log(foundPost.title + " " + foundPost.content);
+    res.render("post", {postTitle: foundPost.title, postContent: foundPost.content});
   }else{
     console.log("No Match Found");
   }
